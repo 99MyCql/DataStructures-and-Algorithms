@@ -12,19 +12,19 @@
   - [csp](exercise\csp\README.md)
   - [leetcode](exercise\leetcode\README.md)
 
-- `study` - 数据结构和算法学习笔记
+- `note` - 数据结构和算法学习笔记
 
   - `dataStructures` - 数据结构
-    - [list](study\dataStructures\list.md)
-    - [stack](study\dataStructures\stack.md)
-    - [queue](study\dataStructures\queue.md)
-    - [tree](study\dataStructures\tree.md)
-    - [graph](study\dataStructures\graph.md)
-    - [并查集](study\dataStructures\并查集.md)
-    - [散列表](study\dataStructures\散列表.md)
+    - [list](note\dataStructures\list.md)
+    - [stack](note\dataStructures\stack.md)
+    - [queue](note\dataStructures\queue.md)
+    - [tree](note\dataStructures\tree.md)
+    - [graph](note\dataStructures\graph.md)
+    - [并查集](note\dataStructures\并查集.md)
+    - [散列表](note\dataStructures\散列表.md)
 
   - `algorithms` - 算法
-    - [sort](study\algorithms\sort.md)
-    - [矩阵快速转置](study\algorithms\矩阵快速转置.md)
-    - [kmp](study\algorithms\kmp.md)
-    - [随机算法](study\algorithms\随机算法.md)
+    - [sort](note\algorithms\sort.md)
+    - [矩阵快速转置](note\algorithms\矩阵快速转置.md)
+    - [kmp](note\algorithms\kmp.md)
+    - [随机算法](note\algorithms\随机算法.md)
