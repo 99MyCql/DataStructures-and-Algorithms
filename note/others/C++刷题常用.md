@@ -53,3 +53,25 @@ memset(a, 0, sizeof(a));
 - `cin.getline(char* , int [, char ])`，可读空字符，遇回车结束。
 
 - `getline(std::cin, string)`，可读空字符，遇到回车结束。
+
+## 5. 排序
+
+头文件：`#include <algorithm>`
+
+对数组排序：
+
+```c++
+int a[n];
+sort(a, a+n);
+```
+
+对vector排序：
+
+```c++
+vector<int> v(n); // 创建有n个元素的vector
+
+// 第三个参数为Lambda表达式（C++11新特性）
+sort(v.begin(), v.end(), [&](const int &a, const int &b) {
+    return a < b;
+});
+```

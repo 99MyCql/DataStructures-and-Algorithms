@@ -62,6 +62,32 @@ dp[i][j] == max(dp[i-1][j], dp[i][j-1]);
 
 代码：`exercise\leetcode\1143最长公共子序列.cc`
 
+#### 最短编辑距离
+
+题目：[https://leetcode-cn.com/problems/edit-distance/](https://leetcode-cn.com/problems/edit-distance/)
+
+类似最长公共子序列。
+
+定义 `dp[i][j]` 为源串 s 的[0,i-1]区间与目标串 t 的[0,j-1]区间的最短编辑距离。
+
+初始化：当目标串为空时，长度为i的源串需进行i次删除操作；源串为空时，若目标串为i，则需进行i次增加操作。
+
+```c
+for (int i = 0; i <= a_len; i++) dp[i][0] = i;
+for (int i = 0; i <= b_len; i++) dp[0][i] = i;
+```
+
+状态转移方程：
+
+```c
+dp[i][j] = MIN(
+    dp[i-1][j]+1,   // s[i] != t[j], 删除s[i]
+    dp[i][j-1]+1,   // s[i] != t[j], 增加一个与t[j]相同的字符
+    dp[i-1][j-1]+1, // s[i] != t[j], 将s[i]修改为与t[j]相同
+    dp[i-1][j-1]    // s[i] == t[j], 不需任何操作
+)
+```
+
 ### 数位DP
 
 答案跟位有关系，且前i位的值与前i-1位的值存在关系，前i位的值会被重复使用。
