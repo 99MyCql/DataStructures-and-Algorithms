@@ -75,3 +75,16 @@ sort(v.begin(), v.end(), [&](const int &a, const int &b) {
     return a < b;
 });
 ```
+
+## 6. 处理方向
+
+```c++
+int dirs[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
+
+for (int i = 0; i < 4; i++) {
+    int newx = x+dirs[i][0], newy = y + dirs[i][1];
+    if (newi >= 0 && newi < n && newj >= 0 && newj < m) {
+        ...
+    }
+}
+```
