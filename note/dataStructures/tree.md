@@ -41,6 +41,21 @@
 遍历：
 
 - 先中后序遍历使用**递归**或**栈**。
+  - 使用栈进行中序遍历：
+
+    ```c
+    while (!s.empty() || cur != NULL) {
+        while (cur != NULL) {
+            s.push(cur);
+            cur = cur->left;
+        }
+        cur = s.top();
+        s.pop();
+        ......
+        cur = cur->right;
+    }
+    ```
+
 - 层次遍历使用**队列**。
 
 ### 多叉树
