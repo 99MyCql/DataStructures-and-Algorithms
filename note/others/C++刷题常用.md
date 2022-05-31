@@ -102,16 +102,3 @@ if (il < jr && jl < ir) {
     ...
 }
 ```
-
-## 8. 二分
-
-```c++
-int l = A[0], r = A[n-1];
-while (l < r) {
-    int mid = (l+r) / 2;
-    // 大于等于目标值，向左找（数组递增）
-    if(A[mid] >= A[target]) r = mid;
-    else l = mid+1;
-}
-return l; // 如果l!=n-1，则A[l] >= A[target]
-```
