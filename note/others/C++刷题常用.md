@@ -102,3 +102,16 @@ if (il < jr && jl < ir) {
     ...
 }
 ```
+
+## 8. 取余
+
+```c++
+a%mod + b%mod = (a+b) % mod
+a%mod - b%mod = (a-b) % mod
+a%mod * b%mod = (a*b) % mod
+```
+
+注意：
+
+- 有时候`a%mod - b%mod != (a-b) % mod`，比如：`7%5 - 4%5 = -2`而`(7-4)%5 = 3`，因此：`(a%mod - b%mod + m) % mod = (a-b) % mod`。
+- 有时候`(a+b) % mod`或`(a*b) % mod`的结果可能小于int最大值，但`a+b`或`a*b`可能超过32位最大值，因此可以将变量设为64位整型。

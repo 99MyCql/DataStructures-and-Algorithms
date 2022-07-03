@@ -298,6 +298,8 @@ class Solution {
 
 见`note\algorithms\dp.md`。
 
+## 6109 - 知道秘密的人数 - 中等 - 前缀和
+
 ## 剑指offer04 - 二维数组中的查找 - 简单 - 二分
 
 这虽是一道简单题，但考虑要周全，对于有可能包含目标值（`target >= l[0] and target <= l[len(l)-1]`）的行都要进行二分查找。
