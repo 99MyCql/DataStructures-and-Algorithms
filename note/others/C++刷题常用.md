@@ -25,17 +25,20 @@
 
 ## 3. 数组初始化
 
-使用memset初始化，需注意：
-
-- 以**字节** 为单位赋值。因此对于int数组，初始化0、-1、0x3f后，数组元素分别是0、-1、0x3f3f3f3f，而初始化1后，数组元素就变为0x01010101。
-
-sizeof函数参数为数组时，返回整个数组所占的字节数。
+使用memset初始化。需注意：以 **字节** 为单位赋值。因此对于int数组，初始化0、-1、0x3f后，数组元素的值分别是0、0xffffffff、0x3f3f3f3f，而初始化1后，数组元素就变为0x01010101。
 
 ```c++
 #include <string.h>
 
 int a[10];
-memset(a, 0, sizeof(a));
+memset(a, 0, sizeof(a)); // sizeof函数参数为数组时，返回整个数组所占的字节数
+```
+
+vector初始化：
+
+```c++
+// m*n，每个元素的值为1
+vector<vector<int>> mat(m, vector<int>(n, 1));
 ```
 
 ## 4. 字符/字符串读取
@@ -78,14 +81,34 @@ sort(v.begin(), v.end(), [&](const int &a, const int &b) {
 
 ## 6. 处理方向
 
+上下左右前进：
+
 ```c++
 int dirs[4][2] = {{-1,0},{0,1},{1,0},{0,-1}};
 
 for (int i = 0; i < 4; i++) {
-    int newx = x+dirs[i][0], newy = y + dirs[i][1];
+    int newx = x + dirs[i][0], newy = y + dirs[i][1];
     if (newi >= 0 && newi < n && newj >= 0 && newj < m) {
         ...
     }
+}
+```
+
+螺旋前进：
+
+```c++
+int dirs[4][2] = {{0,1},{0,1},{1,0},{0,-1}}; // 螺旋：右下左上
+
+vector<vector<int>> mat(m, vector<int>(n, -1));
+int x = 0, y = 0, d = 0;
+while (未到达终点，可以通过已走过点的数量来判断) {
+    int newx = x + dirs[d][0], newy = y + dirs[d][1];
+    // 若下一个点达到边界，或者已经走过，则改变方向
+    if (newx < 0 || newx >= m || newy < 0 || newy >= n || mat[newx][newy] != -1) {
+        d = (d+1)%4;
+    }
+    x = x + dirs[d][0];
+    y = y + dirs[d][1];
 }
 ```
 
