@@ -121,7 +121,7 @@ while (未到达终点，可以通过已走过点的数量来判断) {
 两个区间重叠有4种情况：2种相交，2种包含。快速判断区间是否重叠代码如下：
 
 ```c++
-if (il < jr && jl < ir) {
+if (il < jr && ir > jl) {
     ...
 }
 ```
@@ -138,3 +138,34 @@ a%mod * b%mod = (a*b) % mod
 
 - 有时候`a%mod - b%mod != (a-b) % mod`，比如：`7%5 - 4%5 = -2`而`(7-4)%5 = 3`，因此：`(a%mod - b%mod + m) % mod = (a-b) % mod`。
 - 有时候`(a+b) % mod`或`(a*b) % mod`的结果可能小于int最大值，但`a+b`或`a*b`可能超过32位最大值，因此可以将变量设为64位整型。
+
+## 9. 找最大的两个值
+
+```c++
+int max = 0, sec_max = 0, max_p = 0, sec_max_p = 0;
+for (int i = 0; i < n; i++) {
+    if (arr[i] > max) {
+        // 比最大值大，更新最大值和次大值
+        sec_max = max;
+        sec_max_p = max_p;
+        max = arr[i];
+        max_p = i;
+    } else if (arr[i] > sec_max) {
+        // 比最大值小但比次大值大，更新次大值
+        sec_max = arr[i];
+        sec_max_p = i;
+    }
+}
+```
+
+## 10. 最大公因数
+
+辗转相除法：
+
+```c++
+// 前提：a>b
+int fun(int a, int b) {
+    if (a%b == 0) return b;
+    return fun(b, a%b);
+}
+```
