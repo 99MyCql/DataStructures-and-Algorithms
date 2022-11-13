@@ -1,11 +1,22 @@
 # Math
 
-## 最大公约数
+## 最大公因数和最小公倍数
+
+求最大公因数（辗转相除法/欧几里得算法）：
+
+```c++
+// 前提：a>b
+int gcd(int a, int b) {
+    if (a%b == 0) return b;
+    return gcd(b, a%b);
+}
+```
+
+求最小公倍数：
 
 ```c
-int gcd(int a, in b) {
-    if (b == 0) return a;
-    return gcd(b, a % b);
+int lcm(int a, int b){
+    return a*b/gcd(a, b);
 }
 ```
 
@@ -14,10 +25,15 @@ int gcd(int a, in b) {
 基本的模运算律：
 
 ```c
-(a + b) mod m = (a mod m) + (b mod m)
-(a - b) mod m = (a mod m) - (b mod m)
-(a * b) mod m = (a mod m) * (b mod m)
+a%mod + b%mod = (a+b) % mod
+a%mod - b%mod = (a-b) % mod
+a%mod * b%mod = (a*b) % mod
 ```
+
+注意：
+
+- 有时候`a%mod - b%mod != (a-b) % mod`，比如：`7%5 - 4%5 = -2`而`(7-4)%5 = 3`，因此：`(a%mod - b%mod + m) % mod = (a-b) % mod`。
+- 有时候`(a+b) % mod`或`(a*b) % mod`的结果可能小于int最大值，但`a+b`或`a*b`可能超过32位最大值，因此可以将变量设为64位整型。
 
 ## 快速幂运算
 
