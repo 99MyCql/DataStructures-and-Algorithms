@@ -8,6 +8,8 @@
 
 部分经典题型的详细解法在 `note\` 目录下。
 
+## 3 - 无重复字符的最长子串 - 中等 - 滑动窗口
+
 ## 5 - 最长回文子串 - 中等 - 动态规划
 
 见`note\algorithms\dp.md`。
@@ -124,6 +126,15 @@ while (!s.empty() && height[i] > height[s.top()]) {
 - [官方题解](https://leetcode-cn.com/problems/maximal-rectangle/solution/zui-da-ju-xing-by-leetcode/)
 
 ## 92 - 反转链表II - 中等 - 链表头插法
+
+## 105 - 从前序与中序遍历序列构造二叉树 - 中等 - 二叉树
+
+根据前序和后序的规律，递归即可构造。
+
+题解的思路：
+
+1. 递归，可以用hashmap存前序中节点对应中序中的位置，就不用每次都遍历两个数组。
+2. 迭代，有点复杂，不想看了。
 
 ## 114 - 二叉树展开为链表 - 中等 - 递归
 
