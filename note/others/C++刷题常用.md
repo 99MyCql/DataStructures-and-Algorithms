@@ -1,18 +1,29 @@
 # C++刷题常用
 
-## 1. int无穷大
+## 1. 最大值/最小值/无穷大
+
+最大值/最小值：
+
+```c++
+#include <climits>
+
+INT_MIN
+INT_MAX
+LLONG_MIN
+LLONG_MAX
+```
+
+无穷大：
 
 ```C++
 #define INF 0x3f3f3f3f
 #define INF 0x7fffffff
 ```
 
-其中，常用 `0x3f3f3f3f` 表示无穷大，好处在于：
+常用 `0x3f3f3f3f` 表示，好处在于：
 
 - 10^9
-
 - 两个无穷大相加不会溢出
-
 - 每个字节都相同，可用memset初始化
 
 ## 2. 最大最小值

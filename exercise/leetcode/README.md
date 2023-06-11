@@ -212,6 +212,12 @@ min_dp[i] = min(min(max_dp[i-1]*nums[i], nums[i]), min_dp[i-1]*nums[i]);
  1  3  -1  -3  5 [3  6  7]    [7]
 ```
 
+## 300 - 最长递增子序列 - 中等 - 动态规划
+
+经典动态规划题，非常容易在 O(n^2) 内解决。
+
+但要求降低到 O(nlogn) ，不会。题解：用二分取代第二轮循环，提出一个tail数组，`tail[i]` 代表长度为 `i+1` 的子序列尾部元素最小的值，满足严格递增性质，具体参考：https://leetcode.cn/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/。
+
 ## 316 - 去除重复字母 - 困难 - 栈
 
 此题可用递归，也可用栈的方法。我使用栈的方法，类似于单调栈。
@@ -376,6 +382,10 @@ class Solution {
 我的思路：先把绝对差为k的数都用二进制形式记录下来，比如，第0个和第1个数相差为k，则记录(011)。然后遍历所有的子集，如果子集的二进制比特位表示 `&` 上记录中的数等于这个数，则说明子集中存在相差为k的两个数，不算进美丽子集数目中。
 
 ## 6109 - 知道秘密的人数 - 中等 - 前缀和
+
+## 6449 - ❗收集巧克力 - 中等 - 贪心
+
+注意：long long的最大值用 0x7fffffffffffffff 或 LLONG_MAX 。
 
 ## 6472 - ⭐查询后矩阵的和 - 中等 - 逆向思维
 
