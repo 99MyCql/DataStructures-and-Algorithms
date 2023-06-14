@@ -72,3 +72,38 @@ public:
         return max;
     }
 };
+
+class Solution_new {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int len = heights.size();
+        stack<int> s;
+        int max = 0;
+        for (int i = 0; i < len; i++) {
+            while (!s.empty() && heights[i] < heights[s.top()]) {
+                int t = s.top();
+                printf("t:%d\n", t);
+                s.pop();
+                int sum = 0;
+                if (s.empty()) sum = i*heights[t];
+                else {
+                    sum = (i-s.top()-1)*heights[t];
+                }
+                if (sum > max) max = sum;
+            }
+            s.push(i);
+        }
+
+        while (!s.empty()) {
+            int t = s.top();
+            s.pop();
+            int sum = 0;
+            if (s.empty()) sum = len*heights[t];
+            else {
+                sum = (len-s.top()-1)*heights[t];
+            }
+            if (sum > max) max = sum;
+        }
+        return max;
+    }
+};

@@ -645,3 +645,11 @@ struct Arc {
 Arc arcs[100005];
 sort(arcs, arcs+m);
 ```
+
+## 10. string
+
+```c++
+#include <string>
+```
+
+https://cplusplus.com/reference/string/string/
