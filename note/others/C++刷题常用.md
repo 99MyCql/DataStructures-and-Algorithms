@@ -87,6 +87,9 @@ vector<int> v(n); // 创建有n个元素的vector
 sort(v.begin(), v.end(), [&](const int &a, const int &b) {
     return a < b;
 });
+
+// 排序指定区间
+sort(v.begin()+i, v.end())
 ```
 
 ## 6. 处理方向

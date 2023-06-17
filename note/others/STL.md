@@ -596,57 +596,7 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 
 `my_deque.empty()`: 判断容器是否为空
 
-## 9. #include&lt;iostream&gt; 算法
-
-### 9.1. 快速排序函数 sort()
-
-第一种形式： `sort(a, a+n)` a是数组的首地址，n是要排序部分的尾地址，默认是从小到大排序
-
-第二种形式： `sort(a, a+n, cmp)` cmp是一个函数名字，由使用者自己定义排序的依据。例如，你要对结构体数组排序。
-
-结构体排序（适用于C）：
-
-```c
-typedef struct {
-  int from, to;
-  int weight;
-}Arc;
-```
-
-cmp函数如下（参数为结构体）：
-
-```c
-bool cmp(Arc a, Arc b) {
-  return a.weight < b.weight;
-}
-```
-
-调用sort函数如下：
-
-```c
-Arc arcs[100005];
-sort(arcs, arcs+m, cmp);
-```
-
-即会按照结构体中的weight元素，从小到大排序。
-
-结构体排序还有另一种方式（适用于C++）：
-
-```c
-// C++ 中 struct Arc 就相当于定义了结构体类型 Arc
-struct Arc {
-  int from, to;
-  int weight;
-  bool operator<(const Arc &b) const {
-    return this->weight < b.weight;
-  }
-};
-
-Arc arcs[100005];
-sort(arcs, arcs+m);
-```
-
-## 10. string
+## 9. string
 
 ```c++
 #include <string>

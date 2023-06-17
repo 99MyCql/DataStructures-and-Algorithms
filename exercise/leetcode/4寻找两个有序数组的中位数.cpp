@@ -67,3 +67,72 @@ public:
         }
     }
 };
+
+
+#include <queue>
+#include <functional>
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size(), n = nums2.size();
+
+        bool isOdd = true;
+        if ((m+n)%2 == 0) isOdd = false;
+
+        int k = (m+n)/2;
+        if (isOdd) k++;
+
+        if (m == 0) {
+            if (isOdd) return nums2[k-1];
+            return (nums2[k-1]+nums2[k])/2.0;
+        }
+        if (n == 0) {
+            if (isOdd) return nums1[k-1];
+            return (nums1[k-1]+nums1[k])/2.0;
+        }
+
+        int s1 = 0, s2 = 0;
+        while (k > 1) {
+            int p = k/2, i = s1+p-1, j = s2+p-1;
+            if (i >= m) {
+                i = m-1;
+            }
+            if (j >= n) {
+                j = n-1;
+            }
+            if (nums1[i] <= nums2[j]) {
+                k -= (i-s1+1);
+                s1 = i+1;
+                if (s1 == m) {
+                    if (isOdd) return nums2[s2+k-1];
+                    return (nums2[s2+k-1]+nums2[s2+k])/2.0;
+                }
+            } else {
+                k -= (j-s2+1);
+                s2 = j+1;
+                if (s2 == n) {
+                    if (isOdd) return nums1[s1+k-1];
+                    return (nums1[s1+k-1]+nums1[s1+k])/2.0;
+                }
+            }
+        }
+
+        // 为了能够处理一些边界情况
+        // 比如：
+        // nums1:[], nums2:[1]
+        // nums1:[1,2], nums2:[-1,3]
+        priority_queue< int, vector<int>, greater<int> > q;
+        for (int i = 0; i < 2 && s1+i < m; i++) {
+            q.push(nums1[s1+i]);
+        }
+        for (int i = 0; i < 2 && s2+i < n; i++) {
+            q.push(nums2[s2+i]);
+        }
+        if (isOdd) return q.top();
+        int a = q.top();
+        q.pop();
+        int b = q.top();
+        return (a+b)/2.0;
+    }
+};

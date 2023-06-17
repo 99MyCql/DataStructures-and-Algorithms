@@ -10,6 +10,12 @@
 
 ## 3 - 无重复字符的最长子串 - 中等 - 滑动窗口
 
+## 4 - 寻找两个正序数组的中位数 - 困难 - 特殊
+
+不会，直接看题解：找第k个数。两个数组中的中位数，其实就是两个数组中第 `k = (m+n)/2` 个数。
+
+思路不难理解，但是边界情况很多，处理起来很麻烦。
+
 ## 5 - 最长回文子串 - 中等 - 动态规划
 
 见`note\algorithms\dp.md`。
@@ -179,6 +185,8 @@ min_dp[i] = min(min(max_dp[i-1]*nums[i], nums[i]), min_dp[i-1]*nums[i]);
 
 ## 208 - 实现 Trie (前缀树) - 中等 - Trie树
 
+用类表示结构体。
+
 ## 224 - 基本计算器 - 困难 - 栈
 
 用两个栈（操作数栈和运算符栈）求解表达式。
@@ -218,7 +226,7 @@ min_dp[i] = min(min(max_dp[i-1]*nums[i], nums[i]), min_dp[i-1]*nums[i]);
 
 经典动态规划题，非常容易在 O(n^2) 内解决。
 
-但要求降低到 O(nlogn) ，不会。题解：用二分取代第二轮循环，提出一个tail数组，`tail[i]` 代表长度为 `i+1` 的子序列尾部元素最小的值，满足严格递增性质，具体参考：https://leetcode.cn/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/。
+但要求降低到 O(nlogn) ，不会。题解：用二分取代第二轮循环，提出一个tail数组，`tail[i]` 代表长度为 `i+1` 的子序列尾部元素最小的值，满足严格递增性质，具体参考：<https://leetcode.cn/problems/longest-increasing-subsequence/solution/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/> 。
 
 ## 316 - 去除重复字母 - 困难 - 栈
 
