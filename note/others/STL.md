@@ -109,6 +109,8 @@ int main() {
 
 ## 3. #include&lt;vector&gt; 动态数组
 
+<https://cplusplus.com/reference/vector/vector/>
+
 优点：
 
 - 动态数据个数
