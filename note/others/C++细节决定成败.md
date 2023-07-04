@@ -14,11 +14,11 @@ while (nums[j] == nums[p] && j < len) j++;
 while (j < len && nums[j] == nums[p]) j++;
 ```
 
-## C++ long long 最大值
+## long long 最大值
 
 0x7fffffffffffffff 或 LLONG_MAX
 
-## C++ 运算符优先级
+## 运算符优先级
 
 乘除/取余 > 加减 > 左移/右移 > 大于/小于/等于逻辑比较 > 位运算 > 与或逻辑运算
 
@@ -26,4 +26,20 @@ while (j < len && nums[j] == nums[p]) j++;
 
 ```C++
 (a & b) != 0; // 此处位运算必须加括号
+```
+
+## 重载运算符对指针不生效
+
+示例：
+
+```c++
+struct Node {
+    int val;
+    bool operator < (const Node &i) const {
+        return val > i.val;
+    }
+};
+
+priority_queue<Node*> q; // 比较的是指针，重载运算符不生效
+priority_queue<Node> q;  // 生效
 ```

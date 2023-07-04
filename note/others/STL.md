@@ -8,11 +8,17 @@ STL是C++中的一个类库，提供常用的数据结构(如栈、队列等)和
 
 简单记载STL中的常用内容。
 
+参考：<https://cplusplus.com/reference/stl/> 。
+
 <!-- more -->
 
-## 1. #include&lt;stack&gt; 栈
+## 1. stack
 
-先进后出
+```c++
+#include <stack>
+```
+
+栈。先进后出结构。
 
 ### 1.1. 创建
 
@@ -63,9 +69,13 @@ int main() {
 
 输出：`18446744073709551615`
 
-## 2. #include&lt;queue&gt; 队列
+## 2. queue
 
-先进先出
+```c++
+#include <queue>
+```
+
+队列。先进先出结构。
 
 ### 2.1. 创建
 
@@ -107,14 +117,19 @@ int main() {
 - 参数：无
 - 返回值：队列中元素个数，数据类型为**无符号整型**(同上)
 
-## 3. #include&lt;vector&gt; 动态数组
+## 3. vector
 
-<https://cplusplus.com/reference/vector/vector/>
+```c++
+#include <vector>
+```
+
+动态数组。
+
+参考：<https://cplusplus.com/reference/vector/vector/>
 
 优点：
 
 - 动态数据个数
-
 - 访问数据方便
 
 缺点：
@@ -214,14 +229,17 @@ for(it = v.begin(); it != v.end(); it++){
 }
 ```
 
-## 4. #include&lt;list&gt; 链表
+## 4. list
 
-内部实现：双向链表
+```c++
+#include <list>
+```
+
+内部实现：双向链表。
 
 优点：
 
 - 中间插入删除方便
-
 - 动态数据个数
 
 缺点：
@@ -319,11 +337,15 @@ int main() {
 }
 ```
 
-## 5. #include&lt;map&gt; 映射
+## 5. map
 
-数据间的映射关联，有序键值对。
+```c++
+#include <map>
+```
 
-内部实现：红黑树，插入、删除、查找的时间复杂度都是$O(logn)$。
+有序键值对。
+
+内部实现：红黑树，插入、删除、查找的时间复杂度都是 O(logn)。
 
 ### 5.1. 创建
 
@@ -404,9 +426,13 @@ for (const auto& p : people) {
 }
 ```
 
-## 6. #include&lt;set&gt; 集合
+## 6. set
 
-数据间的关系，有序集合。
+```c++
+#include <set>
+```
+
+有序集合。
 
 内部实现：红黑树。插入删除的时间复杂度为$O(logn)$，查询的时间复杂度为$O(logn)$。
 
@@ -473,9 +499,13 @@ for (set<Node>::iterator it=node_set.begin(); it!=node_set.end(); it++) {
 }
 ```
 
-## 7. #include&lt;queue&gt; - priority_queue - 优先队列
+## 7. priority_queue
 
-在优先队列中，元素被赋予优先级。当访问/删除元素时，具有最高优先级的元素最先被访问/删除。
+```c++
+#include <queue>
+```
+
+优先队列。元素被赋予优先级，当访问/删除元素时，具有最高优先级的元素最先被访问/删除。
 
 内部实现：堆。插入的时间复杂度为$O(logN)$，访问头元素的时间复杂度为$O(1)$，删除头元素的时间复杂度为$O(logN)$。
 
@@ -483,49 +513,29 @@ for (set<Node>::iterator it=node_set.begin(); it!=node_set.end(); it++) {
 
 ### 7.1. 创建
 
+通过结构体重载运算符，自定义比较级：
+
 ```cpp
 struct Node {
     int priority;
     int value;
     bool operator < (const Node &a) const {
-        return priority < a.priority; // 大顶堆，反之则是小顶堆
+        return priority < a.priority; // 大顶堆（默认），反之则是小顶堆
     }
 };
 
-priority_queue<Node> q;
+priority_queue<Node> q; // 类型必须是 Node 。类型若是 Node* 重载运算符不生效
 ```
 
-### 7.2. 增
+通过结构体定义比较级：
 
-`q.push(node)`：在堆的最后加入元素，然后向上筛选
-
-### 7.3. 删
-
-`q.pop(node)`：取出堆的根结点，然后最后一个元素上位，并向下筛选
-
-### 7.4. 查
-
-`q.top()`
-
-`q.size()`
-
-`q.empty()`
-
-### 7.5. 自定义比较
-
-除了定义结构体时重载比较运算符，还可以用如下方式自定义比较：
-
-```cpp
-#include <vector>
-#include <queue>
-
+```c++
 struct ListNode {
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-// 优先队列中元素的自定义比较
 struct cmp {
     bool operator () (ListNode *a, ListNode *b) {
         return a->val > b->val; // 小顶堆
@@ -535,9 +545,39 @@ struct cmp {
 priority_queue<ListNode*, vector<ListNode*>, cmp> q;
 ```
 
-## 8. #include&lt;deque&gt; 双向队列
+通过函数自定义比较级：
 
-头尾都可以进行插入 `push` 、删除 `pop` 操作。
+```c++
+static bool cmp(pair<int, int>& m, pair<int, int>& n) {
+    return m.second > n.second;
+}
+
+priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> q(cmp);
+```
+
+### 7.2. 增
+
+`q.push(node)`：在堆的最后加入元素，然后向上筛选
+
+### 7.3. 删
+
+`q.pop()`：取出堆的根结点，然后最后一个元素上位，并向下筛选
+
+### 7.4. 查
+
+`q.top()`
+
+`q.size()`
+
+`q.empty()`
+
+## 8. deque
+
+```c++
+#include <deque>
+```
+
+双向队列，头尾都可以进行插入 `push` 、删除 `pop` 操作。
 
 内部实现：连续空间，头尾都可以增长。头尾插入删除的时间复杂度为$O(1)$，中间插入删除的时间复杂度为$O(n)$，访问元素的时间复杂度为$O(1)$。
 
@@ -604,4 +644,4 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 #include <string>
 ```
 
-https://cplusplus.com/reference/string/string/
+<https://cplusplus.com/reference/string/string/>

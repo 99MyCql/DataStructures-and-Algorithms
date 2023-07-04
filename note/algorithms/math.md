@@ -58,3 +58,21 @@ ll mod_pow(ll x, ll n, ll mod) {
     return res;
 }
 ```
+
+## 求n以内的质数
+
+1. 暴力。判断一个数 x(x属于`[1,n]`) 是否为质数，遍历 `[2,x-1]` ，如果 x 能被整除则说明不是质数。优化：假如 `p*q = x` 且 `p<q` ，那只需遍历到较小因数 p 就能判断 x 是否为质数，因此只需遍历 `[2, sqrt(x)]` 即可。
+
+2. 埃氏筛。如果一个数 x 为质数，那 2x,3x,··· 一定不是质数，因此可以将它们标记为合数（非质数）。优化：对于一个质数 x ，应该直接从 `x*x` 开始标记，因为 2x,3x,··· 这些数一定在 x 之前就被其它数的倍数标记了。
+
+    ```c
+    for (int i = 2; i < n; ++i) {
+        if (isPrime[i] && i*i < n) {
+            for (int j = i * i; j < n; j += i) {
+                isPrime[j] = 0;
+            }
+        }
+    }
+    ```
+
+3. 线性筛。埃氏筛的优化，详情见：https://leetcode.cn/problems/count-primes/solution/ji-shu-zhi-shu-by-leetcode-solution/ 。
