@@ -645,3 +645,5 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 ```
 
 <https://cplusplus.com/reference/string/string/>
+
+`string substr(size_t pos = 0, size_t len = npos)`: 返回子串。注意：第二个参数为长度！！！
