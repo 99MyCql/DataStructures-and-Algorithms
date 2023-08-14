@@ -339,6 +339,8 @@ int main() {
 
 ## 5. map
 
+<https://cplusplus.com/reference/map/map/>
+
 ```c++
 #include <map>
 ```
@@ -404,13 +406,13 @@ cout << ret_pr.first->first << " " << ret_pr.first->second << " " << ret_pr.seco
 
 `people[key]`: 返回键对应的值
 
-`people.count(key)`: 返回该键对应元素的个数，map 容器的返回值只可能是 0 或 1
+`people.count(key)`: 返回该键对应元素的个数，map 容器的返回值只可能是 0 或 1 。
 
-`people.find(key)`
+`people.find(key)`: 返回指向该元素的迭代器 `map<K, T>::iterator` ，若不存在则指向`people.end()`。
 
-- 参数：
-  - key: 键
-- 返回值：`map<K, T>::iterator`，指向该元素的迭代器，若不存在则指向`people.end()`。
+`lower_bound(key)`: 返回一个迭代器 `map<K, T>::iterator` ，指向键值 `>= key` 的第一个元素。
+
+`upper_bound(key)`: 返回一个迭代器，指向键值 `> key` 的第一个元素。
 
 ### 5.6. 遍历
 
@@ -647,3 +649,22 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 <https://cplusplus.com/reference/string/string/>
 
 `string substr(size_t pos = 0, size_t len = npos)`: 返回子串。注意：第二个参数为长度！！！
+
+## 10. multiset
+
+```c++
+#include <set>
+```
+
+<https://cplusplus.com/reference/set/multiset/>
+
+- 改：
+  - `insert`
+  - `erase`
+  - `swap`
+  - `clear`
+- 查：
+  - `find`
+  - `count`
+  - `lower_bound(key) -> iterator`: 获取指向第一个大于等于 key 的元素的迭代器，不存在则返回 end() 。
+  - `upper_bound(key) -> iterator`

@@ -43,3 +43,14 @@ struct Node {
 priority_queue<Node*> q; // 比较的是指针，重载运算符不生效
 priority_queue<Node> q;  // 生效
 ```
+
+## iterator也要判断边界
+
+iterator需要判断边界，如果 `it == xxx.begin()` 就不要再 `it--` 了。
+
+```c++
+set<int> s;
+s.insert(1);
+multiset<int>::iterator it = s.lower_bound(1);
+it--; // 超出边界
+``
