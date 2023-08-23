@@ -147,3 +147,11 @@ long long c = 1ll * a * b;
 ```
 
 前面乘上 `1ll` ，可以让相乘过程转换为 long long 相乘，而非 int 相乘。若是 int 相乘，则会先将结果保存在 int 中，再赋给 long long，会产生截断。
+
+## 四舍五入
+
+```c
+#include <cmath>
+
+round(2.5);
+```
