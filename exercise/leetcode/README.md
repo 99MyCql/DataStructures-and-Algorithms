@@ -41,11 +41,11 @@
 
 不会，看题解。双指针，背后思想是 **缩减搜索空间**，具体请看：<https://leetcode.cn/problems/container-with-most-water/solution/on-shuang-zhi-zhen-jie-fa-li-jie-zheng-que-xing-tu/> 。
 
-## 15 - 三数之和 - 中等 - 双指针
+## 15 - ⭐三数之和 - 中等 - 双指针
 
-在有序数组nums中，找两个数相加等于某一个数，可以采用双指针实现`O(n)`复杂度。
+在有序数组nums中，找两个数相加等于某一个数，可以采用双指针实现`O(n)`复杂度。p指向数组头，q指向数组尾。如果`nums[p]+nums[q] < target`，则`p++`。如果`nums[p]+nums[q] > target`，则`q--`。因此，本题可以先将数组排序，然后固定一个数 `nums[i]` ，在数组中找两个数，之和为 `-nums[i]` 。
 
-p指向数组头，q指向数组尾。如果`nums[p]+nums[q] < target`，则`p++`。如果`nums[p]+nums[q] > target`，则`q--`。
+题目的关键在于去重。参考39题，组合问题，需要按照某种顺序进行遍历/搜索，使用 begin 变量，才能防止重复。因此，本题只要保证每个三元组 `(nums[i], nums[p], nums[q])` 中 `nums[i] < nums[p] < nums[q]` ，就能防止重复。即 i 从 0 开始遍历， p 从 i+1 开始遍历，q 从反向遍历但必须大于 p 。此外，遍历 nums[i] 和 nums[p] 时要跳过重复元素。
 
 ## 17 - 电话号码的字母组合 - 中等 - 回溯/队列
 
@@ -375,6 +375,18 @@ min_dp[i] = min(min(max_dp[i-1]*nums[i], nums[i]), min_dp[i-1]*nums[i]);
 ## 448 - 💡找到所有数组中消失的数字 - 简单 - 脑筋急转弯
 
 不会改进，看题解：原地修改，具体直接看代码。
+
+## 460 - ⭐LFU缓存 - 困难 - 双哈希表+双向链表
+
+参考题解：<https://leetcode.cn/problems/lfu-cache/solutions/2457716/tu-jie-yi-zhang-tu-miao-dong-lfupythonja-f56h/>
+
+两个 Map ，一个是 key 到 结点 的映射，一个是 频率 到 双向结点链表 的映射。
+
+一些关键点：
+
+- 因为频率相同时需按照LRU的方法删除，所以第二个Map的值为双向链表。同时，**双向链表的头结点的prev指向最后一个结点**，方便直接删除最后一个结点。
+- 因为时间复杂度要求为 O(1) ，所以需要用 **unordered_map** 。而为了删除频率最小的结点，需要用 **min_freq** 记住当前的最小频率。当 put 时， min_freq 直接设置为 1 ；当 get 时，将结点从 freq 链表转移到 freq+1 链表，若 freq==min_freq 且该结点是唯一一个结点，则令 min_freq++ 。
+- 按照题目要求，put 时若 key 已存在，则更新其值，并将其频率+1。
 
 ## 467 - 环绕字符串中唯一的子字符串 - 中等
 

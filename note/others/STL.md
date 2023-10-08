@@ -142,6 +142,18 @@ int main() {
 
 **注意**：`vector v`的内存是分配在栈上的，而`v`中的元素是分配在堆上的。
 
+```c++
+// constructors used in the same order as described above:
+std::vector<int> first;                                // empty vector of ints
+std::vector<int> second(4,100);                       // four ints with value 100
+std::vector<int> third(second.begin(),second.end());  // iterating through second
+std::vector<int> fourth(third);                       // a copy of third
+
+// the iterator constructor can also be used to construct from arrays:
+int myints[] = {16,2,77,29};
+std::vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int) );
+```
+
 ### 3.2. 增
 
 `v.push_back(num)`: 将元素追加到vector结尾
