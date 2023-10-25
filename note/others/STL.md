@@ -243,6 +243,8 @@ for(it = v.begin(); it != v.end(); it++){
 
 ## 4. list
 
+<https://cplusplus.com/reference/list/list/>
+
 ```c++
 #include <list>
 ```

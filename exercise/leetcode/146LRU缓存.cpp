@@ -40,85 +40,142 @@ lRUCache.get(4);    // 返回 4
 链接：https://leetcode.cn/problems/lru-cache
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+// #include <unordered_map>
+
+// using namespace std;
+
+// struct Node {
+//     int key, value;
+//     Node* pre;
+//     Node* next;
+//     Node(int k, int v, Node* p, Node* n) : key(k), value(v), pre(p), next(n) {}
+// };
+
+// class LRUCache {
+// public:
+//     int capacity;
+//     int count;
+//     Node* head;
+//     Node* tail;
+//     unordered_map<int, Node*> map;
+
+//     LRUCache(int capacity) {
+//         this->capacity = capacity;
+//         this->count = 0;
+//         this->head = new Node(0, 0, nullptr, nullptr);
+//         this->tail = new Node(0, 0, nullptr, nullptr);
+//         this->head->next = this->tail;
+//         this->tail->pre = this->head;
+//     }
+
+//     int get(int key) {
+//         if (map.count(key) == 0) {
+//             return -1;
+//         }
+
+//         Node* p = map[key];
+//         Node* pre = p->pre;
+//         Node* next = p->next;
+//         pre->next = next;
+//         next->pre = pre;
+
+//         p->next = this->head->next;
+//         p->pre = this->head;
+//         this->head->next->pre = p;
+//         this->head->next = p;
+
+//         return p->value;
+//     }
+
+//     void put(int key, int value) {
+//         if (map.count(key) == 0) {
+//             if (this->count == this->capacity && this->capacity > 0) {
+//                 Node* p = this->tail->pre;
+//                 p->pre->next = this->tail;
+//                 this->tail->pre = p->pre;
+//                 map.erase(p->key);
+//                 delete p;
+//             } else {
+//                 this->count++;
+//             }
+
+//             Node* p = new Node(key, value, nullptr, nullptr);
+//             p->pre = this->head;
+//             p->next = this->head->next;
+//             this->head->next->pre = p;
+//             this->head->next = p;
+//             map[key] = p;
+//         } else {
+//             Node* p = map[key];
+//             p->value = value;
+
+//             Node* pre = p->pre;
+//             Node* next = p->next;
+//             pre->next = next;
+//             next->pre = pre;
+
+//             p->next = this->head->next;
+//             p->pre = this->head;
+//             this->head->next->pre = p;
+//             this->head->next = p;
+//         }
+//     }
+// };
+
+
+#include <list>
 #include <unordered_map>
 
 using namespace std;
 
 struct Node {
-    int key, value;
-    Node* pre;
-    Node* next;
-    Node(int k, int v, Node* p, Node* n) : key(k), value(v), pre(p), next(n) {}
+    int key, val;
+    Node(int k, int v) : key(k), val(v) {}
 };
 
-class LRUCache {
-public:
-    int capacity;
-    int count;
-    Node* head;
-    Node* tail;
-    unordered_map<int, Node*> map;
 
+class LRUCache {
+    int cap;
+    int len;
+    unordered_map<int,list<Node*>::iterator> m;
+    list<Node*> l;
+public:
     LRUCache(int capacity) {
-        this->capacity = capacity;
-        this->count = 0;
-        this->head = new Node(0, 0, nullptr, nullptr);
-        this->tail = new Node(0, 0, nullptr, nullptr);
-        this->head->next = this->tail;
-        this->tail->pre = this->head;
+        cap = capacity;
+        len = 0;
     }
 
     int get(int key) {
-        if (map.count(key) == 0) {
-            return -1;
-        }
+        if (m.find(key) == m.end()) return -1;
 
-        Node* p = map[key];
-        Node* pre = p->pre;
-        Node* next = p->next;
-        pre->next = next;
-        next->pre = pre;
-
-        p->next = this->head->next;
-        p->pre = this->head;
-        this->head->next->pre = p;
-        this->head->next = p;
-
-        return p->value;
+        list<Node*>::iterator it = m[key];
+        Node *node = *it;
+        l.erase(it);
+        l.push_front(node);
+        m[key] = l.begin();
+        return node->val;
     }
 
     void put(int key, int value) {
-        if (map.count(key) == 0) {
-            if (this->count == this->capacity && this->capacity > 0) {
-                Node* p = this->tail->pre;
-                p->pre->next = this->tail;
-                this->tail->pre = p->pre;
-                map.erase(p->key);
-                delete p;
-            } else {
-                this->count++;
-            }
-
-            Node* p = new Node(key, value, nullptr, nullptr);
-            p->pre = this->head;
-            p->next = this->head->next;
-            this->head->next->pre = p;
-            this->head->next = p;
-            map[key] = p;
-        } else {
-            Node* p = map[key];
-            p->value = value;
-
-            Node* pre = p->pre;
-            Node* next = p->next;
-            pre->next = next;
-            next->pre = pre;
-
-            p->next = this->head->next;
-            p->pre = this->head;
-            this->head->next->pre = p;
-            this->head->next = p;
+        if (m.find(key) != m.end()) {
+            list<Node*>::iterator it = m[key];
+            Node *node = *it;
+            node->val = value;
+            l.erase(it);
+            l.push_front(node);
+            m[key] = l.begin();
+            return;
         }
+
+        if (len == cap) {
+            m.erase((l.back())->key);
+            l.pop_back();
+            len--;
+        }
+        Node *node = new Node(key,value);
+        l.push_front(node);
+        m[key] = l.begin();
+        len++;
     }
 };
 
