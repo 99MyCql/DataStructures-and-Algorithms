@@ -144,14 +144,16 @@ int main() {
 
 ```c++
 // constructors used in the same order as described above:
-std::vector<int> first;                                // empty vector of ints
-std::vector<int> second(4,100);                       // four ints with value 100
-std::vector<int> third(second.begin(),second.end());  // iterating through second
-std::vector<int> fourth(third);                       // a copy of third
+vector<int> first;                               // empty vector of ints
+vector<int> second(4,100);                       // four ints with value 100
+vector<int> third(second.begin(),second.end());  // iterating through second
+vector<int> fourth(third);                       // a copy of third
 
 // the iterator constructor can also be used to construct from arrays:
 int myints[] = {16,2,77,29};
-std::vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int) );
+vector<int> fifth(myints, myints + sizeof(myints) / sizeof(int) );
+
+vector<int> a = {1,2,3,4};
 ```
 
 ### 3.2. 增
@@ -662,7 +664,7 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 
 <https://cplusplus.com/reference/string/string/>
 
-`string substr(size_t pos = 0, size_t len = npos)`: 返回子串。注意：第二个参数为长度！！！
+- `string substr(size_t pos = 0, size_t len = npos)`: 返回子串。注意：第二个参数为长度！！！
 
 ## 10. multiset
 
