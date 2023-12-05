@@ -91,7 +91,7 @@ if target >= nums[mid] {
 }
 ```
 
-## 33 - 搜索旋转排序数组 - 中等 - 二分
+## 33 - ⭐搜索旋转排序数组 - 中等 - 二分
 
 对于非常规升序的数组，需要找到规律改进二分。
 
@@ -214,6 +214,28 @@ while (!s.empty() && height[i] > height[s.top()]) {
 
 ## 92 - 反转链表II - 中等 - 链表头插法
 
+## 94 - 💡二叉树的中序遍历 - 简单 - 栈
+
+非递归中序遍历。栈 + 一个辅助指针 `cur` ，用于指向当前待处理的节点。
+
+```c++
+while (!s.empty() || root != nullptr) {
+    // 若当前节点有左子树，则将当前节点压栈，并指向左子树，直至左子树为空
+    while (root != nullptr) {
+        s.push(root);
+        root = root->left;
+    }
+    // 弹出栈顶节点，**该节点的左子树已处理完成**，将当前节点加入到结果序列中
+    TreeNode* p = s.top();
+    s.pop();
+    res.push_back(p->val);
+    // 如果该节点有右子树，则将 cur 指向右子树，处理右子树
+    root = p->right;
+}
+```
+
+还有一种方法对节点进行标记：`pair<TreeNode*,bool>`，第二个为true表示已处理，则加入结果序列中；为false，则根据中序遍历，依次将右子树、根节点、左子树压入栈。
+
 ## 105 - 从前序与中序遍历序列构造二叉树 - 中等 - 二叉树
 
 根据前序和后序的规律，递归即可构造。
@@ -242,6 +264,41 @@ while (!s.empty() && height[i] > height[s.top()]) {
 题解：左右两次遍历。先从左到右遍历，若 `nums[i] > nums[i-1]` ，则 `left[i] = left[i-1]+1` ；再从右到左遍历，若 `nums[i] > nums[i+1]` ，则 `right[i] = right[i+1]+1` ；最后，`max(left[i],right[i])`。
 
 ## 142 - ⭐环形链表II - 中等 - Floyd判圈算法——快慢指针
+
+指针A指向链表第一个结点，指针B指向第一阶段快慢指针的重合结点，同时前进，重合结点，即为环的入口结点。
+
+指针A从起点出发，经过 `a` 步，到达环的入口结点。指针B从上一步快慢指针的重合点出发，经过 `(n-1)(b+c) + c` 步，也刚好到达环的入口结点。
+
+## 143 - 【未做】⭐重排链表 - 中等 - 快慢指针+头插法
+
+用快慢指针，一次遍历找到链表中间节点；用头插法，将后半段链表倒序；将前后半段链表合并。
+
+## 145 - 💡二叉树的后序遍历 - 简单 - 栈
+
+非递归后序遍历。栈 + 两个指针，指针 `cur` 记录当前节点，指针 `handled` 记录上一个处理过的子树。
+
+```c++
+while (!s.empty() || cur != nullptr) {
+    // 将当前节点压栈，若存在左子树，则指向左子树，直至左子树为空
+    while (cur != nullptr) {
+        s.push(cur);
+        cur = cur->left;
+    }
+    // 将 cur 指向栈顶节点
+    cur = s.top();
+    // 若右子树为空或右子树已处理
+    if (cur->right == nullptr || handled == cur->right) {
+        // 将当前节点加入到结果序列中
+        s.pop();
+        res.push_back(cur->val);
+        handled = cur; // 将当前节点记录为已处理
+        cur = nullptr; // 设置为null表示已处理，且避免重复处理
+    } else {
+        // 否则，将 cur 指向右子树，先处理右子树
+        cur = cur->right;
+    }
+}
+```
 
 ## 146 - ⭐LRU 缓存 - 中等 - 双向链表+哈希表
 
@@ -300,6 +357,10 @@ reverse(nums,k,nums.size());
 2. dp[i] = max(nums[i]+dp[i-2], nums[i-1]+dp[i-3])。
 3. dp[1] = nums[1], dp[2] = max(nums[1],nums[2])。
 
+## 199 - 【未做】💡二叉树的右视图 - 中等 - BFS/DFS
+
+找每一层最右边的结点即可。BFS：将每一层最后一个结点加入到结果中；DFS：根右左遍历，记录当前深度，每一层最右边的结点最先遍历到。
+
 ## 207 - 课程表 - 中等 - 拓扑排序
 
 经典拓扑排序。用一个数cnt记录已处理的课程数据，最后通过判断cnt是否等于numCourses来判断是否存在环。
@@ -319,6 +380,10 @@ reverse(nums,k,nums.size());
 ## 232 - 用栈实现队列 - 简单 - 栈
 
 一个栈A，一个栈B。入队时，将元素压入栈A；出队时，将元素从栈B中弹出。如果栈B为空，则将栈A中元素依次弹出、压入栈B。
+
+## 236 - 💡二叉树的最近公共祖先 - 中等 - 递归
+
+题解：<https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/description/>
 
 ## 238 - 除自身以外数组的乘积 - 中等 - 前缀积
 
@@ -416,6 +481,22 @@ reverse(nums,k,nums.size());
 ## 417 - 太平洋大西洋水流问题 - 中等 - DFS
 
 数据量小没必要DP。逆向DFS思路。
+
+## 445 - ⭐两数相加 II - 中等 - 链表倒置+链表相加
+
+两个倒序链表相加（一个循环搞定）：
+
+```c++
+while (p1 || p2 || add) {
+    if (p1) add += p1->val;
+    if (p2) add += p2->val;
+    p->next = new ListNode(add%10);
+    add = add/10;
+    p = p->next;
+    if (p1) p1 = p1->next;
+    if (p2) p2 = p2->next;
+}
+```
 
 ## 448 - 💡找到所有数组中消失的数字 - 简单 - 脑筋急转弯
 
