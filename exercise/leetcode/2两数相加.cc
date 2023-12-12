@@ -75,3 +75,23 @@ public:
         return head->next;
     }
 };
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *p1 = l1, *p2 = l2;
+        int add = 0;
+        ListNode *newHead = new ListNode();
+        ListNode *p = newHead;
+        while (p1 || p2 || add) {
+            if (p1) add += p1->val;
+            if (p2) add += p2->val;
+            p->next = new ListNode(add%10);
+            add /= 10;
+            if (p1) p1 = p1->next;
+            if (p2) p2 = p2->next;
+            p = p->next;
+        }
+        return newHead->next;
+    }
+};
