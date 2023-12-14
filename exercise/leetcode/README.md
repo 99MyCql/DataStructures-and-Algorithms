@@ -70,6 +70,24 @@ while (p1 || p2 || add) {
 
 两个指针，第一个指针从头到尾遍历链表，当遍历到第`N+1`个结点时，第二个指针从第`1`个结点开始遍历。此后，两个指针同步前进，相隔保持`N`个结点。直到第一个指针到达最后一个`NULL`结点，两个指针停止，此时第二个指针指向倒数第`N`个结点。
 
+## 21 - 合并两个有序链表 - 简单 - 💡递归
+
+迭代的是人，递归的是神。
+
+参考题解：
+
+```c++
+if (list1 == nullptr && list2 == nullptr) return nullptr;
+if (list1 == nullptr) return list2;
+if (list2 == nullptr) return list1;
+if (list1->val <= list2->val) {
+    list1->next = mergeTwoLists(list1->next, list2);
+    return list1;
+}
+list2->next = mergeTwoLists(list1, list2->next);
+return list2;
+```
+
 ## 22 - 括号生成 - 中等 - 递归回溯
 
 ## 23 - 合并K个排序链表 - 困难 - 归并/优先队列
@@ -241,7 +259,19 @@ while (!s.empty() && height[i] > height[s.top()]) {
 
 - [官方题解](https://leetcode-cn.com/problems/maximal-rectangle/solution/zui-da-ju-xing-by-leetcode/)
 
-## 92 - 反转链表II - 中等 - 链表头插法
+## 92 - 反转链表II - 中等 - 头插法/💡递归
+
+递归反转链表，参考：<https://leetcode.cn/problems/reverse-linked-list-ii/solutions/37247/bu-bu-chai-jie-ru-he-di-gui-di-fan-zhuan-lian-biao/?envType=study-plan-v2&envId=top-interview-150>。
+
+```c++
+ListNode* reverse(ListNode* head) {
+    if (head->next == null) return head;
+    ListNode *last = reverse(head->next);
+    head->next->next = head;
+    head->next = null;
+    return last;
+}
+```
 
 ## 94 - 💡二叉树的中序遍历 - 简单 - 栈
 
@@ -358,9 +388,25 @@ min_dp[i] = min(min(max_dp[i-1]*nums[i], nums[i]), min_dp[i-1]*nums[i]);
 
 ## 155 - 最小栈 - 简单 - 单调栈
 
-## 160 - 相交链表 - 简单 - 链表
+## 160 - 💡相交链表 - 简单
 
 先计算出两个链表的长度，然后用指针`long`指向长链表，指针`short`指向短链表。`long`指针先走 长短链表差值 的步数，此时`short`指针再开始与`long`指针同步前进，若途中两个指针相等，则说明链表相交。
+
+=== 更新 ===
+
+更优的题解：指针 pA 先遍历链表A再遍历链表B，指针 pB 先遍历链表B再遍历链表A，最后两个指针重合的点要么是相交节点，要么是null。
+
+```c++
+ListNode *pA = headA, *pB = headB;
+while (pA != pB) {
+    if (pA == nullptr) pA = headB;
+    else pA = pA->next;
+    if (pB == nullptr) pB = headA;
+    else pB = pB->next;
+}
+```
+
+注意：当遍历完一个链表时，必须要让 pA 和 pB 指向 null ，不然遇到不相交的链表会死循环。
 
 ## 162 - 寻找峰值 - 中等 - 二分
 

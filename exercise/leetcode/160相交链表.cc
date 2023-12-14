@@ -105,3 +105,47 @@ public:
         return NULL;
     }
 };
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *pA = headA, *pB = headB;
+        int lenA = 0, lenB = 0;
+        while (pA) {
+            lenA++;
+            pA = pA->next;
+        }
+        while (pB) {
+            lenB++;
+            pB = pB->next;
+        }
+        if (pA != pB) return nullptr;
+        if (lenA < lenB) {
+            pA = headB;
+            pB = headA;
+        } else {
+            pA = headA;
+            pB = headB;
+        }
+        for (int i = 0; i < max(lenA,lenB); i++) {
+            if (pA == pB) break;
+            pA = pA->next;
+            if (i >= max(lenA,lenB)-min(lenA,lenB)) pB = pB->next;
+        }
+        return pA;
+    }
+};
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *pA = headA, *pB = headB;
+        while (pA != pB) {
+            if (pA == nullptr) pA = headB;
+            else pA = pA->next;
+            if (pB == nullptr) pB = headA;
+            else pB = pB->next;
+        }
+        return pA;
+    }
+};

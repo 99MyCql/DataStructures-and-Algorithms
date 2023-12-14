@@ -15,7 +15,9 @@
 struct ListNode {
     int val;
     ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 class Solution {
@@ -54,5 +56,32 @@ public:
         }
 
         return head->next;
+    }
+};
+
+class Solution {
+public:
+    ListNode* reverse(ListNode *head, ListNode *end) {
+        ListNode *newHead = new ListNode();
+        newHead->next = end;
+        ListNode *p = head;
+        while (p != end) {
+            ListNode *next = p->next;
+            p->next = newHead->next;
+            newHead->next = p;
+            p = next;
+        }
+        return newHead->next;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode *newHead = new ListNode();
+        newHead->next = head;
+        ListNode *lp = newHead, *rp = newHead;
+        for (int i = 0; i < right; i++) {
+            if (i > (right-left)) lp = lp->next;
+            rp = rp->next;
+        }
+        lp->next = reverse(lp->next, rp->next);
+        return newHead->next;
     }
 };
