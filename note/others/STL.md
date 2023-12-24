@@ -690,3 +690,60 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 ```c++
 #include <utility>
 ```
+
+```c++
+pair<int, string> p(1, "abc");
+pair<int, string> p = make_pair(1, "abc");
+cout << p.first << p.second << endl;
+tie(age, name) = p;
+```
+
+## 12. algorithm
+
+```c++
+#include <algorithm>
+```
+
+### sort
+
+```c++
+int a[n];
+sort(a, a+n);
+
+vector<int> v(n); // 创建有n个元素的vector
+
+// 第三个参数为Lambda表达式（C++11新特性）
+sort(v.begin(), v.end(), [&](const int &a, const int &b) {
+    return a < b;
+});
+
+// 排序指定区间
+sort(v.begin()+i, v.end())
+```
+
+### reverse
+
+```c++
+int a[10] = {};
+reverse(a,a+5); // 翻转0-5
+
+vector<int> a = {1,2,3,4,5};
+reverse(a.begin(), a.end());
+
+string s = "abc";
+reverse(s.begin(), s.end());
+```
+
+### 二分
+
+```c++
+int a[9];
+bool b = binary_search(a, a+9, 4); // 查找某个元素是否出现
+int i = lower_bound(a, a+9, 4) - a; // 查找第一个 大于或等于 某个元素的位置，返回值是指针或iterator
+int i = upper_bound(a, a+9, 4) - a; // 查找第一个大于某个元素的位置，返回值是指针或iterator
+
+vector<int> v(9);
+bool b = binary_search(v.begin(), v.end(), 4);
+int i = lower_bound(v.begin(), v.end(), 4) - v.begin();
+int i = upper_bound(v.begin(), v.end(), 4) - v.begin();
+```

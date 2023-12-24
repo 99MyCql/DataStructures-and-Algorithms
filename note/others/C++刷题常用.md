@@ -67,32 +67,7 @@ vector<vector<int>> mat(m, vector<int>(n, 1));
 
 - `getline(std::cin, string)`，可读空字符，遇到回车结束。
 
-## 5. 排序
-
-头文件：`#include <algorithm>`
-
-对数组排序：
-
-```c++
-int a[n];
-sort(a, a+n);
-```
-
-对vector排序：
-
-```c++
-vector<int> v(n); // 创建有n个元素的vector
-
-// 第三个参数为Lambda表达式（C++11新特性）
-sort(v.begin(), v.end(), [&](const int &a, const int &b) {
-    return a < b;
-});
-
-// 排序指定区间
-sort(v.begin()+i, v.end())
-```
-
-## 6. 处理方向
+## 5. 处理方向
 
 上下左右前进：
 
@@ -125,7 +100,7 @@ while (未到达终点，可以通过已走过点的数量来判断) {
 }
 ```
 
-## 7. 判断区间重叠
+## 6. 判断区间重叠
 
 区间i：`[il, ir)`
 
@@ -139,7 +114,7 @@ if (il < jr && ir > jl) {
 }
 ```
 
-## 8. 隐式类型转换
+## 7. 隐式类型转换
 
 ```c++
 int a, b;
@@ -148,23 +123,10 @@ long long c = 1ll * a * b;
 
 前面乘上 `1ll` ，可以让相乘过程转换为 long long 相乘，而非 int 相乘。若是 int 相乘，则会先将结果保存在 int 中，再赋给 long long，会产生截断。
 
-## 9. 四舍五入
+## 8. 四舍五入
 
 ```c
 #include <cmath>
 
 round(2.5);
-```
-
-## 10. reverse
-
-```c++
-int a[10] = {};
-reverse(a,a+5); // 翻转0-5
-
-vector<int> a = {1,2,3,4,5};
-reverse(a.begin(), a.end());
-
-string s = "abc";
-reverse(s.begin(), s.end());
 ```
