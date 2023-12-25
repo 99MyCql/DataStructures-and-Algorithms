@@ -158,43 +158,22 @@ vector<int> a = {1,2,3,4};
 
 ### 3.2. 增
 
-`v.push_back(num)`: 将元素追加到vector结尾
+- `v.insert()`：向某个指定位置插入元素，返回表示第一个新插入元素位置的迭代器。
 
-- 参数：num，与声明队列时的数据类型相同
-- 返回值：无
-
-**注意**：`v.push_back()`采用的是深拷贝。参考[网上案例](https://blog.csdn.net/love_fdu_llp/article/details/51407613)，代码如下：
-
-```c
-class Solution {
-public:
-  vector<vector<int>> generate(int numRows) {
-    vector<vector<int>> result;
-    for (int i=0; i<numRows; ++i) {
-      vector<int> temp(i+1,1);
-      cout<<&temp<<endl;
-      result.push_back(temp);
-    }
-    for (int i=0; i<numRows; ++i) {
-      cout<<&result[i]<<endl;
-    }
-    return result;
-  }
-};
+```c++
+vector<int> v{1,2};
+v.insert(v.being()+1, 3); // {1,3,2}
+v.insert(v.end(), 2, 5);  // {1,3,2,5,5}
+array<int,3> test{7,8,9};
+v.insert(v.end(), test.begin(), test.end()); // {1,3,2,5,5,7,8,9}
+v.insert(v.end(), { 10,11 }); // {1,3,2,5,5,7,8,9,10,11}
 ```
 
-输出如下：
+- `v.emplace()`：类似insert，但每次只能插入一个元素。效率更高：emplace() 在插入元素时，是在容器的指定位置直接构造元素，而不是先单独生成，再将其复制（或移动）到容器中。
 
-```console
-0x7fff5fbff5f0
-0x7fff5fbff5f0
-0x7fff5fbff5f0
-0x100105540
-0x100105558
-0x100105570
-```
+- `v.push_back()`：将元素追加到vector结尾，采用的是深拷贝，参考<https://blog.csdn.net/love_fdu_llp/article/details/51407613>。
 
-由此可知，`push_back()`函数不是借用传入元素的地址，而是将元素所指的内容(堆上的数据)都复制到自己的堆上。
+- `v.emplace_back()`：将元素追加到vector结尾，效率更高。
 
 ### 3.3. 删
 
