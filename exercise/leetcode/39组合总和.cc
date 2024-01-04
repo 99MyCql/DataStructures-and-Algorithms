@@ -51,14 +51,14 @@ public:
         return res;
     }
 
-    void dfs(vector<int>& candidates, int target, vector<int>& path, int st) {
+    void dfs(vector<int>& candidates, int target, vector<int>& path, int begin) {
         if (target < 0) return;
         if (target == 0) {
             res.push_back(path);
             return;
         }
 
-        for (int i = st; i < candidates.size(); i++) {
+        for (int i = begin; i < candidates.size(); i++) {
             path.push_back(candidates[i]);
             dfs(candidates, target-candidates[i], path, i);
             path.pop_back();
