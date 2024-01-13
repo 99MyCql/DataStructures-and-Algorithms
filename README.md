@@ -27,6 +27,7 @@
   - `dataStructures` - 数据结构
     - [并查集](./note/dataStructures/%E5%B9%B6%E6%9F%A5%E9%9B%86.md)
     - [散列表](./note/dataStructures/%E6%95%A3%E5%88%97%E8%A1%A8.md)
+    - [跳表](./note/dataStructures/跳表.md)
     - [线段树](./note/dataStructures/%E7%BA%BF%E6%AE%B5%E6%A0%91.md)
     - [graph](./note/dataStructures/graph.md)
     - [list](./note/dataStructures/list.md)
