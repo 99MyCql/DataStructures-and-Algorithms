@@ -169,7 +169,7 @@ v.insert(v.end(), test.begin(), test.end()); // {1,3,2,5,5,7,8,9}
 v.insert(v.end(), { 10,11 }); // {1,3,2,5,5,7,8,9,10,11}
 ```
 
-- `v.emplace()`：类似insert，但每次只能插入一个元素。效率更高：emplace() 在插入元素时，是在容器的指定位置直接构造元素，而不是先单独生成，再将其复制（或移动）到容器中。
+- `v.emplace()`：类似insert，但每次只能插入一个元素。**效率更高**：emplace() 在插入元素时，是在容器的指定位置直接构造元素，而不是先单独生成，再将其复制（或移动）到容器中。
 
 - `v.push_back()`：将元素追加到vector结尾，采用的是深拷贝，参考<https://blog.csdn.net/love_fdu_llp/article/details/51407613>。
 
@@ -180,9 +180,6 @@ v.insert(v.end(), { 10,11 }); // {1,3,2,5,5,7,8,9,10,11}
 `pop_back()`: 删除容器尾部的元素
 
 `v.clear()`: 清空vector
-
-- 参数：无
-- 返回值：无
 
 ### 3.4. 改
 
@@ -220,6 +217,32 @@ vector<int>::iterator it;
 for(it = v.begin(); it != v.end(); it++){
   cout << *it << endl;
 }
+```
+
+### 3.7. 排序
+
+```c++
+vector<int> v = {4,3,1,5,2,8};
+sort(v.begin(), v.end()); // 默认从小到大排序
+sort(v.begin(), v.end(), greater<int>()); // 从大到小排序
+
+// 自定义排序函数
+bool cmp(int a, int b){
+  return a > b;
+}
+sort(v.begin(), v.end(), cmp);
+
+sort(v.begin(), v.end(), [&](const int &a, const int &b) {
+    return a > b;
+});
+
+// 自定义结构体排序：重载运算符
+struct Node {
+  int x, y;
+  bool operator <(const Node& n) const {
+    return x < n.x; // 按照x从小到大排序
+  }
+};
 ```
 
 ## 4. list
@@ -719,7 +742,7 @@ reverse(s.begin(), s.end());
 int a[9];
 bool b = binary_search(a, a+9, 4); // 查找某个元素是否出现
 int i = lower_bound(a, a+9, 4) - a; // 查找第一个 大于或等于 某个元素的位置，返回值是指针或iterator
-int i = upper_bound(a, a+9, 4) - a; // 查找第一个大于某个元素的位置，返回值是指针或iterator
+int i = upper_bound(a, a+9, 4) - a; // 查找第一个 大于 某个元素的位置，返回值是指针或iterator
 
 vector<int> v(9);
 bool b = binary_search(v.begin(), v.end(), 4);
