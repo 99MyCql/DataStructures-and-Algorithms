@@ -666,7 +666,10 @@ deque<string> words_part {begin(words), begin(words)+1};  // words的第1个元�
 
 <https://cplusplus.com/reference/string/string/>
 
-- `string substr(size_t pos = 0, size_t len = npos)`: 返回子串。注意：第二个参数为长度！！！
+- `string substr(size_t pos = 0, size_t len = npos)`: 返回子串。
+  注意：第二个参数为长度！！！
+- `size_t find(const string& str, size_t pos = 0)`: 从 pos 位置开始，找与 str 匹配的子串，返回子串的位置。
+  注意：采用暴力算法，时间复杂度为 **`O(n*m)`** ！！！
 
 ## 10. multiset
 

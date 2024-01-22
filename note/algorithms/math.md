@@ -75,4 +75,4 @@ ll mod_pow(ll x, ll n, ll mod) {
     }
     ```
 
-3. 线性筛。埃氏筛的优化，详情见：https://leetcode.cn/problems/count-primes/solution/ji-shu-zhi-shu-by-leetcode-solution/ 。
+3. 线性筛。埃氏筛的优化，详情见：<https://leetcode.cn/problems/count-primes/solution/ji-shu-zhi-shu-by-leetcode-solution/> 。
