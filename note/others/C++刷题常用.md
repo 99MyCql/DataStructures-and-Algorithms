@@ -130,3 +130,46 @@ long long c = 1ll * a * b;
 
 round(2.5);
 ```
+
+## 9. 字符串和数值相互转换
+
+数值转字符串：
+
+```c++
+// c++11标准增加了全局函数std::to_string，可转换整型和浮点型
+string s = to_string(123) // s="123"
+```
+
+字符串转数值：
+
+```c++
+#include <string>
+// std::stoi/stol/stoll
+int a = stoi("123");
+
+// atoi
+string s = "123";
+int a = atoi(s.c_str());
+```
+
+## 10. lambda 表达式
+
+```c++
+// 定义
+[capture list](parameter list) -> return_type {
+    function body
+}
+
+// 普通函数
+auto f = [&](int i, int mask, bool limit, bool zero) -> int {
+    ...
+}
+
+// 函数递归
+// #include <functional>
+function<int(int, int, bool, bool)> dfs = [&](int i, int mask, bool limit, bool zero) -> int {
+    ...
+    dfs(...)
+    ...
+}
+```

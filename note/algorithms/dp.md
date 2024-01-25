@@ -22,7 +22,7 @@
 
 对于斐波拉契数列这种子问题、状态转移方程、边界都已知的问题，可以轻松地使用动态规划方法求解。但对于大多数问题，并不会告诉我们这些，需要我们分析问题、找到规律、自行定义，而这就需要我们从大量题目中寻找经验。
 
-## 总结
+## 小结
 
 从图形的角度，考虑上述示例，若采用递归算法，问题求解过程可看作一颗树，子问题是树中的节点，相同子问题会重复出现。而采用动态规划，求解过程可看作一个**有向无环图DAG**，图中节点对应**子问题（状态）**，边对应**状态间的转移**，子问题不会重复出现，而且是拓扑排序的。
 
@@ -34,11 +34,9 @@
 - 状态转移方程（子问题之间的关系）。定义 `dp[i]` 与 `dp[i-1]` 或 `dp[i-2]` 等之前子问题的转移关系。
 - 边界。定义`dp[0]`等。
 
-## 经典案例
+## 基础DP
 
-### 基础DP
-
-#### 最长回文子串
+### 最长回文子串
 
 定义 `dp[i][j]` 为 `[i,j]` 内的字符串是否为回文串，1代表是，0代表不是。
 
@@ -62,7 +60,7 @@ for (int i = s_len-1; i >= 0; i--) {
 
 代码：`exercise\leetcode\5最长回文子串.cpp`
 
-#### 最长公共子序列
+### 最长公共子序列
 
 定义 `dp[i][j]` 表示 s1 的[0,i-1]区间与 s2 的[0,j-1]区间的最长公共子序列长度。
 
@@ -76,7 +74,7 @@ dp[i][j] == max(dp[i-1][j], dp[i][j-1]);
 
 代码：`exercise\leetcode\1143最长公共子序列.cc`
 
-#### 最短编辑距离
+### 最短编辑距离
 
 题目：[https://leetcode-cn.com/problems/edit-distance/](https://leetcode-cn.com/problems/edit-distance/)
 
@@ -102,7 +100,7 @@ dp[i][j] = MIN(
 )
 ```
 
-#### 最大子数组和
+### 最大子数组和
 
 这道题的关键在于定义无后效性的子问题！定义 `dp[i]` 代表以`nums[i]` **结尾** 的连续子数组中和最大的值。
 
@@ -112,7 +110,7 @@ dp[i][j] = MIN(
 dp[i] = max(dp[i-1]+nums[i], nums[i])
 ```
 
-### 状态压缩DP
+## 状态压缩DP
 
 长度为n的集合中，**每个元素有0和1两种取值**，那么总共有$2^n$种情况，每种情况看作集合的一个状态。
 
@@ -124,11 +122,79 @@ dp[i] = max(dp[i-1]+nums[i], nums[i])
 
 以上就是状态压缩的精髓，将一个集合状态压缩到一个整数，这样就可以作为数组下标。然后，就可以用DP数组进行状态转移。
 
-### 数位DP
+## 数位DP
 
-答案跟数的位（此处位是指千位、百位、十位）有关系，前i位的值与前i-1位的值存在关系，且前i位的值会被重复使用。
+答案跟**数字的数位（指千位、百位、十位）**有关系，前i位的值与前i-1位的值存在关系，且前i位的值会被重复使用。
 
-#### 数码出现次数
+### 模板
+
+参考[灵神的数位DP通用模板](https://leetcode.cn/problems/count-special-integers/solutions/1746956/shu-wei-dp-mo-ban-by-endlesscheng-xtgx/)，题目为：[2376.统计特殊整数](https://leetcode.cn/problems/count-special-integers/description/)。
+
+由于Python自带记忆化搜索，Python的模板更简明、更好理解：
+
+```py
+s = str(n)
+@cache  # 记忆化搜索
+def f(i: int, mask: int, is_limit: bool, is_num: bool) -> int:
+    if i == len(s):
+        return int(is_num)  # is_num 为 True 表示得到了一个合法数字
+    res = 0
+    if not is_num:  # 可以跳过当前数位
+        res = f(i + 1, mask, False, False)
+    low = 0 if is_num else 1  # 如果前面没有填数字，必须从 1 开始（因为不能有前导零）
+    up = int(s[i]) if is_limit else 9  # 如果前面填的数字都和 n 的一样，那么这一位至多填 s[i]（否则就超过 n 啦）
+    for d in range(low, up + 1):  # 枚举要填入的数字 d
+        if (mask >> d & 1) == 0:  # d 不在 mask 中
+            res += f(i + 1, mask | (1 << d), is_limit and d == up, True)
+    return res
+return f(0, 0, True, False)
+```
+
+C++模板修改后如下：
+
+```c++
+string s = to_string(n); // 123 -> "123" 。注意：一定要从左到右遍历，即从高位到低位，因为低位受高位限制！！！
+int m = s.length();
+
+// dp[i][state]：用于记忆化搜索。
+// i 表示第几位，最高位是0。
+// state 表示当前位的状态，依据题目变化，可以不需要
+vector<vector<int>> dp(m, vector<int>(1<<10, -1));
+
+// i 表示当前第几位，最高位是0。
+// mask 表示数位已经选择的数字的集合。这个参数是根据模板所基于的题目添加的，不同题目含义不一样，甚至部分题目可以省去。
+// limit 表示当前数位是否有上限。
+// zero 表示当前数位之前是否都为0。
+function<int(int, int, bool, bool)> dfs = [&](int i, int mask, bool limit, bool zero) -> int {
+    if (i == m) {
+        if (zero) return 0; // 数字0在本题中非法
+        return 1;
+    }
+    // 此处只记录不受到 limit 和 zero 约束时的状态
+    if (!limit && !zero && dp[i][mask] != -1) return dp[i][mask];
+
+    int res = 0;
+    // 如果存在前导零，当前数位可继续为0
+    if (zero) res = dfs(i + 1, mask, false, true);
+
+    // 如果前面填的数字都和 n 的一样，那么这一位至多填数字 s[i]（否则就超过 n 啦）
+    int up = limit ? s[i] - '0' : 9;
+
+    // 枚举当前数位要填入的数字 d 。当存在前导零时，从 1 开始；否则从 0 开始。
+    for (int d = zero; d <= up; ++d)
+        // d 不在 mask 中
+        if ((mask >> d & 1) == 0) res += dfs(i + 1, mask | (1 << d), limit && d == up, false);
+
+    // 此处只记录不受到 limit 和 zero 约束时的状态
+    if (!limit && !zero) dp[i][mask] = res;
+
+    return res;
+};
+
+return dfs(0, 0, true, true); // 注意：一定要从高位开始遍历（递归），低位受高位限制
+```
+
+### 数码出现次数
 
 输入两个正整数a,b，求在[a,b]（0 < a < b < 10^13）中的所有整数中，每个数码（0～9）各出现了多少次。
 
@@ -139,9 +205,9 @@ dp[i] = max(dp[i-1]+nums[i], nums[i])
 - 区间拆分：[a,b]中数码1的次数可转换成：[0,b]中数码1的次数 - [0,a-1]中数码1的次数
 - 分析状态转移方程：求[0,54321]中数码1的次数，`前5位中1的次数 = 0000~9999中1的次数 * 5（第5位是0~4时，前4位中1出现的次数） + 1*10000（10000~19999间第5位的1出现了共10000次）+ 0000~4321中1出现的次数`。
 
-代码：
+代码：（有问题，不够简明，应参考[exercise\leetcode\233. 数字 1 的个数.cc](../../exercise/leetcode/233.%20数字%201%20的个数.cc)）
 
-```c
+```c++
 #include <cstdio>
 #include <cstring>
 #include <cmath>
